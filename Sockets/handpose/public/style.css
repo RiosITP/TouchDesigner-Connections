@@ -1,0 +1,25 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+/*   overflow: hidden; */
+}
+
+canvas {
+  
+}
+
+.description {
+  font-family:sans-serif;
+  position:fixed;
+  width: 80vw;
+  top:10px;
+  left:20px;
+}
+
+button {
+  width: 80px;
+  height: 40px;
+}
