@@ -6,13 +6,12 @@ let socket = io();
 let poseNet; // variable for poseNet instance
 let poses = []; // array to store any detected poses
 let video; 
-let pointsToTD=[];
+
 
 // When the model is loaded. Log sucess message
 function modelLoaded() {
   console.log("Model Loaded!");
 }
-
 
 function setup() {
   createCanvas(640, 480);
@@ -27,23 +26,29 @@ function setup() {
   poseNet.on("pose", (results) => {
     poses = results;
   
-    if (poses.length>0) {
+    if (poses.length > 0) {
       // get the keys of the first detected pose
-      keys = poses[0].pose.keypoints;
+      let keys = poses[0].pose.keypoints;
       // keypoint information will be formatted as an array of JSON objects each containing
       // a confidence score, part name, and x,y position of that part. 
+     
+      // Create an array to eventually send to Touchdesigner
+      let pointsToTD = [];
 
-      // loop through all the available positions
-      for (let k in keys){
-        // store each keypoint in an array
+      // loop through all the available keypoints
+      for (let i=0; i < keys.length; i++){
+        // pass only the values (not JSON objects) into an array
         let pointInfo = [];
-        // index each point in an array that will get sent to TouchDesigner
-        pointsToTD[k] = pointInfo
+        pointInfo[0] = keys[i].part;
+        pointInfo[1] = keys[i].position.x;
+        pointInfo[2] = keys[i].position.y;
+
+        // add array values to eventually be sent to TD
+        pointsToTD[i] = pointInfo;
       }
       //send array of posenet points to TouchDesigner
       socket.emit("poses", pointsToTD);
-      // console.log(pointsToTD) // log feedback if you need it
-      
+     // console.log(pointsToTD) // log feedback if you need it
     }
   });
 }
