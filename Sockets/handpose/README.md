@@ -1,5 +1,6 @@
-# TouchDesigner & Socket.io Workshop
+# ml5 Handpose / TouchDesigner / Socket.io Example
 
-by Jeeyoon Hyun
+Based on TouchDesigner & Socket.io Workshop by Jeeyoon Hyun
+
 
 This is a web server example for the TouchDesigner & Socket.io workshop.
